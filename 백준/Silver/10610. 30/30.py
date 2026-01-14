@@ -1,7 +1,5 @@
-n = input()
-n_lst = list(map(int, list(n)))
-n_lst.sort(reverse=True)
-if n_lst[-1] == 0 and sum(n_lst)%3 == 0:
-    print(*n_lst, sep='')
+n = sorted(input(), reverse=True)
+if n[-1] == '0' and sum(map(int, n))%3 == 0:
+    print(''.join(n))
 else:
     print(-1)
