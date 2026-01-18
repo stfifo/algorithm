@@ -1,6 +1,6 @@
 n, m = map(int, input().split())
 
-origin = set([input() for _ in range(n)])
+origin = {input() for _ in range(n)}
 count = 0
 for _ in range(m):
     s = input()
