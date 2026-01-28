@@ -7,15 +7,12 @@ int main() {
     cin.tie(NULL);
 
     for (int i = 0; i < 3; ++i) {
-        int count = 0;
-        int num[4];
+        int count = 0, num;
         for (int j = 0; j < 4; j++) {
-            cin >> num[i];
-            if (num[i] == 0) count += 1;
+            cin >> num;
+            count += num;
         }
-        string s = "EABCD";
-        cout << s[count] << '\n';
+        cout << "DCBAE"[count] << '\n';
     }
-
     return 0;
 }
