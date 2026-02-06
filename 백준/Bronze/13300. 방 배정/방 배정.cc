@@ -12,12 +12,15 @@ int main() {
 
     while (n--) {
         cin >> s >> y;
-        if (year[s][y-1] == 1) {
-            room++;
-            year[s][y-1] = 0;
-        } else year[s][y-1] = 1;
+        year[s][y-1]++;
     }
 
-    for (const auto& row : year) room += accumulate(row.begin(), row.end(), 0);
-    cout << room << '\n';
+    for (int s=0; s< 2; ++s) {
+        for (int y=0; y<6; ++y) {
+            int temp = year[s][y];
+            if (temp == 0) continue;
+            room += (temp + k - 1) / k;
+        }
+    }
+    cout << room;
 }
