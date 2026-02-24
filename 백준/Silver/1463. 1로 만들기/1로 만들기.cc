@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int dist[1000005];
-
+int d[1000005];
 
 int main() {
     ios::sync_with_stdio(false);
@@ -10,24 +9,12 @@ int main() {
     int n;
     cin >> n;
 
-    fill(dist, dist+1000001, -1);
-    dist[1] = 0;
-    queue<int> q;
-    q.push(1);
+    d[1] = 0;
 
-
-    while (dist[n] == -1) {
-        int cur = q.front(); q.pop();
-
-        for (int nxt : {cur+1, 2*cur, 3*cur}) {
-            if (nxt > n) continue;
-            if (dist[nxt] != -1) continue;
-            dist[nxt] = dist[cur]+1;
-            q.push(nxt);
-        }
+    for (int i=2; i<=n; ++i) {
+        d[i] = d[i-1]+1;
+        if (i%2 == 0) d[i] = min(d[i], d[i/2]+1);
+        if (i%3 == 0) d[i] = min(d[i], d[i/3]+1);
     }
-
-    cout << dist[n];
-
-
+    cout << d[n];
 }
