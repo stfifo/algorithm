@@ -30,13 +30,11 @@ int main () {
         tmp2 = *max_element(dp_max+1, dp_max+4) + x2;
         tmp3 = max(dp_max[2], dp_max[3]) + x3;
         dp_max[1] = tmp1, dp_max[2] = tmp2, dp_max[3] = tmp3;
-        mx = *max_element(dp_max+1, dp_max+4);
 
         tmp1 = min(dp_min[1], dp_min[2]) + x1;
         tmp2 = *min_element(dp_min+1, dp_min+4) + x2;
         tmp3 = min(dp_min[2], dp_min[3]) + x3;
         dp_min[1] = tmp1, dp_min[2] = tmp2, dp_min[3] = tmp3;
-        mn = *min_element(dp_min+1, dp_min+4);
     }
 
     cout << *max_element(dp_max+1, dp_max+4)
