@@ -39,5 +39,7 @@ int main () {
         mn = *min_element(dp_min+1, dp_min+4);
     }
 
-    cout << mx << ' ' << mn;
+    cout << *max_element(dp_max+1, dp_max+4)
+    << ' '
+    << *min_element(dp_min+1, dp_min+4);
 }
