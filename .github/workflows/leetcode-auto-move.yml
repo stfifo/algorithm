@@ -1,0 +1,62 @@
+name: Organize LeetCode Submissions
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'LeetCode/**'
+      - '백준/**'
+      - '프로그래머스/**'
+      - 'README.md'
+      - '.github/**'
+
+jobs:
+  move-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Organize Folders
+        run: |
+          # 1. LeetCode 폴더가 없으면 생성
+          mkdir -p LeetCode
+
+          # 2. 이동에서 제외할 폴더/파일 목록 설정
+          # (백준허브가 만드는 폴더와 깃허브 설정 폴더를 보호합니다)
+          EXCLUDE_LIST=("LeetCode" "백준" "프로그래머스" ".github" ".git" "README.md")
+
+          # 3. 루트 디렉토리의 항목들을 검사하여 이동
+          for item in *; do
+            # 제외 목록에 포함되어 있는지 확인
+            is_excluded=false
+            for ex in "${EXCLUDE_LIST[@]}"; do
+              if [[ "$item" == "$ex" ]]; then
+                is_excluded=true
+                break
+              fi
+            done
+
+            # 폴더이면서 제외 목록에 없고, 리트허브가 생성한 폴더인 경우 이동
+            if [ -d "$item" ] && [ "$is_excluded" = false ]; then
+              echo "Moving $item to LeetCode/ folder"
+              mv "$item" LeetCode/
+            fi
+          done
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 변경사항이 있는지 확인 후 커밋
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: organize LeetCode submission to subdirectory"
+            git push
+          fi
