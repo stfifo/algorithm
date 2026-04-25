@@ -12,4 +12,8 @@ This is an auto push repository for Problem solving
 |  |
 | ------- |
 | [0069-sqrtx](https://github.com/stfifo/algorithm/tree/master/0069-sqrtx) |
+## String
+|  |
+| ------- |
+| [0058-length-of-last-word](https://github.com/stfifo/algorithm/tree/master/0058-length-of-last-word) |
 <!---LeetCode Topics End-->
