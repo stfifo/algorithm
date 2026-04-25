@@ -7,6 +7,7 @@ This is an auto push repository for Problem solving
 |  |
 | ------- |
 | [0009-palindrome-number](https://github.com/stfifo/algorithm/tree/master/0009-palindrome-number) |
+| [0066-plus-one](https://github.com/stfifo/algorithm/tree/master/0066-plus-one) |
 | [0069-sqrtx](https://github.com/stfifo/algorithm/tree/master/0069-sqrtx) |
 ## Binary Search
 |  |
@@ -20,6 +21,7 @@ This is an auto push repository for Problem solving
 |  |
 | ------- |
 | [0027-remove-element](https://github.com/stfifo/algorithm/tree/master/0027-remove-element) |
+| [0066-plus-one](https://github.com/stfifo/algorithm/tree/master/0066-plus-one) |
 ## Two Pointers
 |  |
 | ------- |
