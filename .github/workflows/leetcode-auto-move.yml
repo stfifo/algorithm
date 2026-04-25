@@ -10,6 +10,7 @@ on:
       - '프로그래머스/**'
       - 'README.md'
       - '.github/**'
+      - 'stats.json'
 
 jobs:
   move-files:
@@ -24,9 +25,12 @@ jobs:
         run: |
           # LeetCode 폴더가 없으면 생성
           mkdir -p LeetCode
+
           # 이동에서 제외할 폴더/파일 목록 설정
           # 백준허브가 만드는 폴더와 깃허브 설정 폴더를 보호
-          EXCLUDE_LIST=("LeetCode" "백준" "프로그래머스" ".github" ".git" "README.md")
+          EXCLUDE_LIST=("LeetCode" "백준" "프로그래머스" ".github" ".git" "README.md" "stats.json")
+
+          COMMIT_MSG=""
 
           # 루트 디렉토리의 항목들을 검사하여 이동
           for item in *; do
@@ -41,10 +45,25 @@ jobs:
 
             # 폴더이면서 제외 목록에 없고, 리트허브가 생성한 폴더인 경우 이동
             if [ -d "$item" ] && [ "$is_excluded" = false ]; then
+
+              FOLDER_MSG=$(git log -1 --format=%s -- "$item")
+
+              if [ -n "$FOLDER_MSG" ]; then
+                COMMIT_MSG="$FOLDER_MSG"
+              fi
+
               echo "Moving $item to LeetCode/ folder"
               mv "$item" LeetCode/
             fi
           done
+
+          # 추출 실패시 기본 커밋 메시지 설정
+          if [ -z "$COMMIT_MSG" ]; then
+            COMMIT_MSG="Organize LeetCode submissions"
+          fi
+
+          # 추출된 커밋 메시지를 GitHub Actions 환경 변수로 설정
+          echo "FINAL_COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
 
       - name: Commit and Push changes
         run: |
@@ -56,9 +75,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            # github.event.head_commit.message -> original commit message
-            ORIGINAL_COMMIT_MSG="${{ github.event.head_commit.message }}"
-            
-            git commit -m "$ORIGINAL_COMMIT_MSG"
+            git commit -m "$FINAL_COMMIT_MSG"
             git push
           fi
