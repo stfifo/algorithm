@@ -23,6 +23,9 @@ jobs:
 
       - name: Organize Folders
         run: |
+          # 최신 상태(stats.json 등)를 불러오기 위해 pull
+          git pull --rebase origin main
+
           # LeetCode 폴더가 없으면 생성
           mkdir -p LeetCode
 
@@ -45,6 +48,16 @@ jobs:
 
             # 폴더이면서 제외 목록에 없고, 리트허브가 생성한 폴더인 경우 이동
             if [ -d "$item" ] && [ "$is_excluded" = false ]; then
+              
+              # stats.json에서 해당 문제의 난이도 추출 및 목적지 폴더 설정 (추가된 로직)
+              RAW_DIFF=$(jq -r ".leetcode.shas[\"$item\"].difficulty" stats.json)
+              case $RAW_DIFF in
+                easy)   DIR_NAME="Easy" ;;
+                medium) DIR_NAME="Medium" ;;
+                hard)   DIR_NAME="Hard" ;;
+                *)      DIR_NAME="Misc" ;;
+              esac
+              mkdir -p "LeetCode/$DIR_NAME"
 
               FOLDER_MSG=$(git log -1 --format=%s -- "$item")
 
@@ -52,8 +65,8 @@ jobs:
                 COMMIT_MSG="$FOLDER_MSG"
               fi
 
-              echo "Moving $item to LeetCode/ folder"
-              mv "$item" LeetCode/
+              echo "Moving $item to LeetCode/$DIR_NAME/ folder"
+              mv "$item" "LeetCode/$DIR_NAME/"
             fi
           done
 
@@ -77,5 +90,16 @@ jobs:
           else
             git commit -m "$FINAL_COMMIT_MSG"
             git pull --rebase origin main
+            
+            # 통계표가 업데이트된 README를 LeetCode 폴더로 복사
+            cp README.md LeetCode/README.md
+            
+            # 루트 README는 리트허브가 건드리기 직전(HEAD~1)의 깨끗한 상태로 되돌리기 (추가된 로직)
+            git checkout HEAD~1 -- README.md
+            
+            # 변경사항(README 복사 및 복구)을 현재 커밋에 덮어쓰기
+            git add LeetCode/README.md README.md
+            git commit --amend --no-edit
+            
             git push
           fi
