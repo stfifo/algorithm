@@ -27,8 +27,13 @@ This is an auto push repository for Problem solving
 |  |
 | ------- |
 | [0027-remove-element](https://github.com/stfifo/algorithm/tree/master/0027-remove-element) |
+| [0876-middle-of-the-linked-list](https://github.com/stfifo/algorithm/tree/master/0876-middle-of-the-linked-list) |
 ## Bit Manipulation
 |  |
 | ------- |
 | [1342-number-of-steps-to-reduce-a-number-to-zero](https://github.com/stfifo/algorithm/tree/master/1342-number-of-steps-to-reduce-a-number-to-zero) |
+## Linked List
+|  |
+| ------- |
+| [0876-middle-of-the-linked-list](https://github.com/stfifo/algorithm/tree/master/0876-middle-of-the-linked-list) |
 <!---LeetCode Topics End-->
