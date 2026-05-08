@@ -6,6 +6,7 @@ on:
       - main
     paths-ignore:
       - 'LeetCode/**'
+      - 'NeetCode/**'
       - '백준/**'
       - '프로그래머스/**'
       - 'README.md'
@@ -31,7 +32,7 @@ jobs:
 
           # 이동에서 제외할 폴더/파일 목록 설정
           # 백준허브가 만드는 폴더와 깃허브 설정 폴더를 보호
-          EXCLUDE_LIST=("LeetCode" "백준" "프로그래머스" ".github" ".git" "README.md" "stats.json")
+          EXCLUDE_LIST=("LeetCode" "NeetCode" "백준" "프로그래머스" ".github" ".git" "README.md" "stats.json")
 
           COMMIT_MSG=""
 
